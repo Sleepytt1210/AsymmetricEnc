@@ -1,5 +1,6 @@
 from math import gcd
 from optparse import OptionParser
+from utils import modinv2
 import sys
 
 p = 257
@@ -17,9 +18,12 @@ parser.add_option("-m", "--message", action="store", dest="m",
                   help="Message", type="int")
 (options, args) = parser.parse_args()
 
-p = options.p
-q = options.q
-e = options.e
+if options.p:
+	p = options.p
+if options.q:
+	q = options.q
+if options.e:
+	e = options.e
 N = p * q
 fN = (p-1) * (q-1)
 m = 123 if not options.m else options.m
@@ -35,13 +39,8 @@ print("gcd of e and fN:", denom)
 
 print ("fN is:", fN)
 
-d = 0
-
-for i in range(1,fN):
-	if (gcd(fN,i)==1 and i*e%fN==1): 
-		print("Multiplicative inverse of", e, "mod", fN, "is", i)
-		d = i
-		break
+d = modinv2(e, fN)
+print("Multiplicative inverse of", e, "mod", fN, "is", d)
 
 c = pow(m, e, N)
 print ("Message =", m, ", Ciphered =", c)
