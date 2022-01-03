@@ -17,3 +17,10 @@ def modinv2(a, m):
 		return pow(a, -1, m)
 	except:
 		raise Exception('Modular inverse does not exist')
+		
+def moddiv(a, b, m):
+	"""Calculates result (c) of a/b (mod m), c = a * b⁻¹ (mod m)"""
+	a = a%m
+	inv = modinv2(b,m)
+	return a*inv%m
+	
